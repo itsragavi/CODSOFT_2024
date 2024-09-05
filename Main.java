@@ -1,69 +1,47 @@
-import java.util.*;
+import java.util.Scanner;
 
 public class Main {
-    static boolean equal_or_not(int random_number, int user_guess, String user_name, int attemptsLeft) {
-        if (random_number == user_guess) {
-            System.out.println("\nWoah! " + user_name + " You guessed it right!");
-            return true;
-        } else if (random_number < user_guess) {
-            int value = random_number + 10;
-            if (attemptsLeft == 1) {
-                System.out.println("Oops :( It's wrong! This is your last attempt.");
-            } else if (value > user_guess) {
-                System.out.println("Oops :( It's wrong! but you are very close. Try a slightly lower number.");
-            } else {
-                System.out.println("Oops :( It's wrong! You're too high. Try a much lower number.");
-            }
+
+    // Method to calculate total, average, and grade
+    void add(int maths, int social, int science, int tamil, int english) {
+        int totalMarks = maths + social + science + tamil + english;
+        double averagePercentage = (double) totalMarks / 5;
+
+        String grade;
+        if (averagePercentage >= 90) {
+            grade = "O";
+        } else if (averagePercentage >= 80) {
+            grade = "A+";
+        } else if (averagePercentage >= 70) {
+            grade = "A";
+        } else if (averagePercentage >= 60) {
+            grade = "B+";
         } else {
-            int value1 = random_number - 10;
-            if (attemptsLeft == 1) {
-                System.out.println("Oops :( It's wrong! This is your last attempt.");
-            } else if (user_guess > value1) {
-                System.out.println("Oops :( It's wrong! but you are very close. Try a slightly higher number.");
-            } else {
-                System.out.println("Oops :( It's wrong! You're too low. Try a much higher number.");
-            }
+            grade = "B";
         }
-        System.out.println("Attempts left: " + (attemptsLeft - 1));
-        if (attemptsLeft - 1 > 0) {
-            System.out.println("Alright, give it another chance, " + user_name);
-        }
-        return false;
+
+        System.out.println("Total Marks: " + totalMarks);
+        System.out.println("Average Percentage: " + averagePercentage + "%");
+        System.out.println("Grade: " + grade);
     }
 
     public static void main(String[] args) {
-        System.out.println("******************** NUMBER GAME ********************");
-        Random random = new Random();
         Scanner scan = new Scanner(System.in);
-        int total_rounds = 3;
-        int total_attempts = 3;
 
-        System.out.println("\nHow would you like us to address you?");
-        String user_name = scan.nextLine();
+        System.out.println("Enter Mathematics mark:");
+        int maths = scan.nextInt();
+        System.out.println("Enter Social mark:");
+        int social = scan.nextInt();
+        System.out.println("Enter Science mark:");
+        int science = scan.nextInt();
+        System.out.println("Enter Tamil mark:");
+        int tamil = scan.nextInt();
+        System.out.println("Enter English mark:");
+        int english = scan.nextInt();
 
-        int score = 0;
+        Main main = new Main();
+        main.add(maths, social, science, tamil, english);
 
-        for (int round = 1; round <= total_rounds; round++) {
-            int random_number = 1 + random.nextInt(100);
-            System.out.println("\nRound " + round + ": The random number has been generated.");
-            boolean guessedCorrectly = false;
-
-            for (int attempt = 1; attempt <= total_attempts; attempt++) {
-                System.out.println("\nGuess the number: ");
-                int user_guess = scan.nextInt();
-                guessedCorrectly = equal_or_not(random_number, user_guess, user_name, total_attempts - attempt + 1);
-                if (guessedCorrectly) {
-                    score += (total_attempts - attempt + 1);
-                    break;
-                }
-            }
-
-            if (!guessedCorrectly) {
-                System.out.println("\nSorry, you've used all your attempts. The number was: " + random_number);
-            }
-        }
-
-        System.out.println("\nThank you for playing the number game, " + user_name + "!");
-        System.out.println("Your score: " + score);
+        scan.close();
     }
 }
